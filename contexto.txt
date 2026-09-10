@@ -1,0 +1,3 @@
+quiero crear una plataforma web que tenga una buena arquitectura escalable con un sistema de modulos, por el momento solo quiero que sea el modulo de inventario
+el cual debe tener añadir producto con sus especificaciones necesarias, idealmente que genere un codigo qr para imprimirlo y pegarselo al cajon donde ira y poder escanearlo desde el celular 
+y te diga informacion y cantidad de ese producto
