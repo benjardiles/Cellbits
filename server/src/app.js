@@ -12,6 +12,8 @@ export function createApp() {
   const app = express();
 
   app.disable('x-powered-by');
+  // Detrás de Caddy + Cloudflare Tunnel: confiar en el proxy local para obtener la IP real del visitante
+  app.set('trust proxy', 'loopback');
   app.use(helmet());
   app.use(cors({ origin: true, credentials: false }));
   app.use(express.json({ limit: '1mb' }));
