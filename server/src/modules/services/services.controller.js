@@ -32,7 +32,10 @@ export const servicesController = {
   }),
 
   remove: asyncHandler(async (req, res) => {
-    const result = await servicesService.remove(req.params.id);
+    const result = await servicesService.remove(req.params.id, {
+      restock: req.query.restock === 'true',
+      userId: req.user?.id,
+    });
     res.json(result);
   }),
 };

@@ -1,0 +1,134 @@
+/* Landing pública (cellbits.cl). Todo va bajo .lp para no afectar al sistema interno. */
+.lp {
+  --lp-ink: #0b0b0c;
+  --lp-ink-2: #151517;
+  --lp-line: rgba(255, 255, 255, 0.09);
+  --lp-soft: #a1a1aa;
+  background: #fff;
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+html:has(.lp) { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+.lp-wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* Navegación */
+.lp-nav {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(11, 11, 12, 0.92);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--lp-line);
+}
+.lp-nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.lp-brand { display: flex; align-items: center; gap: 10px; color: #fff; }
+.lp-brand img { border-radius: 999px; display: block; }
+.lp-brand span { font-size: 20px; font-weight: 500; letter-spacing: 0.02em; }
+.lp-links { display: flex; align-items: center; gap: 6px; }
+.lp-links a { color: #d4d4d8; padding: 8px 14px; border-radius: 8px; font-size: 15px; font-weight: 500; }
+.lp-links a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+.lp-links .lp-staff {
+  margin-left: 10px; color: var(--gold-light);
+  border: 1px solid rgba(203, 164, 78, 0.45);
+}
+.lp-links .lp-staff:hover { color: #fff; background: rgba(203, 164, 78, 0.16); }
+.lp-burger { display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
+.lp-burger span { display: block; width: 22px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; }
+
+/* Hero */
+.lp-hero {
+  background:
+    radial-gradient(900px 420px at 85% 10%, rgba(203, 164, 78, 0.18), transparent 60%),
+    linear-gradient(180deg, var(--lp-ink) 0%, var(--lp-ink-2) 100%);
+  color: #fff;
+  padding: 96px 0 104px;
+}
+.lp-hero-inner { display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: center; }
+.lp-eyebrow {
+  display: inline-block; margin: 0 0 18px; padding: 6px 12px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--gold-light); background: rgba(203, 164, 78, 0.12); border: 1px solid rgba(203, 164, 78, 0.3);
+}
+.lp-hero h1 { font-size: clamp(38px, 6vw, 64px); line-height: 1.05; margin: 0 0 20px; font-weight: 600; letter-spacing: -0.01em; }
+.lp-lead { font-size: 18px; color: #c4c4cc; max-width: 34em; margin: 0 0 32px; }
+.lp-hero-mark { display: flex; justify-content: center; }
+.lp-hero-mark img {
+  width: min(320px, 80%); aspect-ratio: 1; border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(203, 164, 78, 0.35), 0 30px 80px -20px rgba(203, 164, 78, 0.45);
+}
+
+/* Botones */
+.lp-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.lp-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: 16px;
+  background: var(--gold); color: #111; border: 1px solid var(--gold);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.lp-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+.lp-btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.25); }
+.lp-btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Secciones */
+.lp-section { padding: 88px 0; }
+.lp-section-alt { background: var(--bg); }
+.lp-section h2 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 8px; font-weight: 600; }
+.lp-section-lead { color: var(--text-muted); font-size: 17px; margin: 0 0 40px; }
+
+.lp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.lp-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 26px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.lp-card:hover { border-color: rgba(203, 164, 78, 0.6); box-shadow: var(--shadow-lg); }
+.lp-card-icon {
+  display: inline-flex; width: 48px; height: 48px; align-items: center; justify-content: center;
+  border-radius: 12px; background: #fbf1de; color: var(--primary); margin-bottom: 16px;
+}
+.lp-card h3 { margin: 0 0 6px; font-size: 18px; }
+.lp-card p { margin: 0; color: var(--text-muted); }
+
+.lp-steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: none; }
+.lp-steps li { position: relative; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+.lp-step-num {
+  display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center;
+  border-radius: 999px; background: var(--lp-ink); color: var(--gold-light);
+  font-family: 'Kanit', sans-serif; font-weight: 600; margin-bottom: 14px;
+}
+.lp-steps h3 { margin: 0 0 6px; font-size: 17px; }
+.lp-steps p { margin: 0; color: var(--text-muted); font-size: 15px; }
+
+/* Contacto */
+.lp-contact { background: var(--lp-ink); color: #fff; }
+.lp-contact .lp-section-lead { color: #c4c4cc; }
+.lp-contact-inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+.lp-contact-list { margin: 0; display: grid; gap: 18px; }
+.lp-contact-list dt { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--lp-soft); }
+.lp-contact-list dd { margin: 2px 0 0; font-size: 17px; }
+.lp-contact-list a { color: var(--gold-light); }
+
+.lp-footer { background: #000; color: var(--lp-soft); border-top: 1px solid var(--lp-line); font-size: 14px; }
+.lp-footer-inner { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+.lp-footer a { color: var(--lp-soft); }
+.lp-footer a:hover { color: var(--gold-light); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .lp-grid { grid-template-columns: repeat(2, 1fr); }
+  .lp-steps { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .lp-burger { display: block; }
+  .lp-links {
+    display: none; position: absolute; top: 68px; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 2px; padding: 12px 16px 18px;
+    background: var(--lp-ink); border-bottom: 1px solid var(--lp-line);
+  }
+  .lp-links.is-open { display: flex; }
+  .lp-links a { padding: 14px 12px; }
+  .lp-links .lp-staff { margin: 8px 0 0; text-align: center; }
+  .lp-hero { padding: 64px 0 72px; }
+  .lp-hero-inner, .lp-contact-inner { grid-template-columns: 1fr; }
+  .lp-hero-mark { display: none; }
+  .lp-section { padding: 64px 0; }
+  .lp-grid, .lp-steps { grid-template-columns: 1fr; }
+}

@@ -110,6 +110,31 @@ const migrations = [
   `
   CREATE INDEX IF NOT EXISTS idx_service_notifications_service ON service_notifications(service_id);
   `,
+  // Auditoría #4: SQLite no permite cambiar el CHECK de una columna existente,
+  // así que el invariante "precio entero en CLP" se impone con triggers.
+  `
+  CREATE TRIGGER IF NOT EXISTS trg_services_price_int_insert
+  BEFORE INSERT ON services
+  WHEN NEW.price <> CAST(NEW.price AS INTEGER)
+  BEGIN
+    SELECT RAISE(ABORT, 'El precio debe ser un entero (CLP sin decimales).');
+  END;
+  CREATE TRIGGER IF NOT EXISTS trg_services_price_int_update
+  BEFORE UPDATE OF price ON services
+  WHEN NEW.price <> CAST(NEW.price AS INTEGER)
+  BEGIN
+    SELECT RAISE(ABORT, 'El precio debe ser un entero (CLP sin decimales).');
+  END;
+  `,
+  // Auditoría #10: mismo rigor que services.status para la columna hermana.
+  `
+  CREATE TRIGGER IF NOT EXISTS trg_service_notifications_status_insert
+  BEFORE INSERT ON service_notifications
+  WHEN NEW.status NOT IN ('recibido', 'en_diagnostico', 'en_reparacion', 'listo_para_entrega', 'entregado', 'cancelado')
+  BEGIN
+    SELECT RAISE(ABORT, 'Estado de notificación inválido.');
+  END;
+  `,
 ];
 
 export function runMigrations() {

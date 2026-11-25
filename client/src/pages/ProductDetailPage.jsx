@@ -19,6 +19,7 @@ export function ProductDetailPage() {
   const [reason, setReason] = useState('');
   const [movements, setMovements] = useState([]);
   const [movementsLoading, setMovementsLoading] = useState(true);
+  const [movementsError, setMovementsError] = useState('');
 
   useEffect(() => {
     inventoryApi
@@ -34,7 +35,11 @@ export function ProductDetailPage() {
     setMovementsLoading(true);
     movementsApi
       .list({ productId: id, limit: 10 })
-      .then((result) => setMovements(result.items))
+      .then((result) => {
+        setMovements(result.items);
+        setMovementsError('');
+      })
+      .catch((err) => setMovementsError(err.response?.data?.message || 'No se pudo cargar el historial de movimientos.'))
       .finally(() => setMovementsLoading(false));
   }
 
@@ -66,7 +71,7 @@ export function ProductDetailPage() {
     if (!window.confirm(`¿Eliminar "${product.name}"? Esta acción no se puede deshacer.`)) return;
     try {
       await inventoryApi.remove(id);
-      navigate('/inventario');
+      navigate('/app/inventario');
     } catch (err) {
       setError(err.response?.data?.message || 'No se pudo eliminar.');
     }
@@ -76,7 +81,7 @@ export function ProductDetailPage() {
     return (
       <div>
         <div className="alert alert-error">{error}</div>
-        <Link to="/inventario">← Volver al inventario</Link>
+        <Link to="/app/inventario">← Volver al inventario</Link>
       </div>
     );
   }
@@ -87,7 +92,7 @@ export function ProductDetailPage() {
 
   return (
     <div style={{ display: 'grid', gap: 20 }}>
-      <Breadcrumbs items={[{ label: 'Panel', to: '/' }, { label: 'Inventario', to: '/inventario' }, { label: product.name }]} />
+      <Breadcrumbs items={[{ label: 'Panel', to: '/' }, { label: 'Inventario', to: '/app/inventario' }, { label: product.name }]} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1 style={{ marginBottom: 4 }}>{product.name}</h1>
@@ -96,8 +101,8 @@ export function ProductDetailPage() {
           </p>
         </div>
         <div className="actions">
-          <Link to={`/productos/${id}/imprimir`} className="btn">Imprimir QR</Link>
-          <Link to={`/productos/${id}/editar`} className="btn btn-secondary">Editar</Link>
+          <Link to={`/app/productos/${id}/imprimir`} className="btn">Imprimir QR</Link>
+          <Link to={`/app/productos/${id}/editar`} className="btn btn-secondary">Editar</Link>
           <button type="button" className="btn btn-secondary" onClick={handleDelete}>Eliminar</button>
         </div>
       </div>
@@ -185,17 +190,19 @@ export function ProductDetailPage() {
           <p className="muted" style={{ fontSize: 12, marginTop: 10 }}>
             Escanéalo con el celular para ver información y stock.
           </p>
-          <Link to={`/productos/${id}/imprimir`} className="btn btn-sm">Imprimir etiqueta</Link>
+          <Link to={`/app/productos/${id}/imprimir`} className="btn btn-sm">Imprimir etiqueta</Link>
         </div>
       </div>
 
       <div className="card">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2 style={{ fontSize: 16, marginTop: 0 }}>Historial de movimientos</h2>
-          <Link to={`/movimientos?productId=${id}`} className="muted" style={{ fontSize: 13 }}>Ver todo →</Link>
+          <Link to={`/app/movimientos?productId=${id}`} className="muted" style={{ fontSize: 13 }}>Ver todo →</Link>
         </div>
         {movementsLoading ? (
           <p className="muted">Cargando…</p>
+        ) : movementsError ? (
+          <div className="alert alert-error">{movementsError}</div>
         ) : movements.length === 0 ? (
           <p className="muted">Sin movimientos registrados.</p>
         ) : (

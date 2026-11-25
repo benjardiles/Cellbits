@@ -111,12 +111,12 @@ export function ProductFormPage() {
     try {
       if (isEditing) {
         await inventoryApi.update(id, payload);
-        navigate(`/productos/${id}`);
+        navigate(`/app/productos/${id}`);
       } else {
         // La cantidad inicial solo se pide al crear; después, todo cambio de
         // stock debe pasar por "Ajustar stock" en el detalle del producto.
         const { product } = await inventoryApi.create({ ...payload, quantity: Number(form.quantity) });
-        navigate(`/productos/${product.id}`);
+        navigate(`/app/productos/${product.id}`);
       }
     } catch (err) {
       setError(extractApiError(err).message);
@@ -132,8 +132,8 @@ export function ProductFormPage() {
       <Breadcrumbs
         items={
           isEditing
-            ? [{ label: 'Panel', to: '/' }, { label: 'Inventario', to: '/inventario' }, { label: form.name || 'Producto', to: `/productos/${id}` }, { label: 'Editar' }]
-            : [{ label: 'Panel', to: '/' }, { label: 'Inventario', to: '/inventario' }, { label: 'Añadir producto' }]
+            ? [{ label: 'Panel', to: '/' }, { label: 'Inventario', to: '/app/inventario' }, { label: form.name || 'Producto', to: `/app/productos/${id}` }, { label: 'Editar' }]
+            : [{ label: 'Panel', to: '/' }, { label: 'Inventario', to: '/app/inventario' }, { label: 'Añadir producto' }]
         }
       />
       <div>

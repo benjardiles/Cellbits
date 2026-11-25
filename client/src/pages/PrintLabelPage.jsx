@@ -82,7 +82,7 @@ export function PrintLabelPage() {
     return (
       <div>
         <div className="alert alert-error">{error}</div>
-        <Link to="/inventario">← Volver al inventario</Link>
+        <Link to="/app/inventario">← Volver al inventario</Link>
       </div>
     );
   }
@@ -122,7 +122,7 @@ export function PrintLabelPage() {
       `}</style>
 
       <div className="no-print" style={{ display: 'grid', gap: 4, marginBottom: 16 }}>
-        <Breadcrumbs items={[{ label: 'Panel', to: '/' }, { label: 'Inventario', to: '/inventario' }, { label: product.name, to: `/productos/${id}` }, { label: 'Imprimir QR' }]} />
+        <Breadcrumbs items={[{ label: 'Panel', to: '/' }, { label: 'Inventario', to: '/app/inventario' }, { label: product.name, to: `/app/productos/${id}` }, { label: 'Imprimir QR' }]} />
       </div>
 
       <div className="no-print" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, gap: 12, flexWrap: 'wrap' }}>

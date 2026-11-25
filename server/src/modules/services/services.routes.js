@@ -18,8 +18,20 @@ const partSchema = z.object({
 const serviceSchema = z.object({
   type: z.enum(SERVICE_TYPES, { errorMap: () => ({ message: 'Tipo de servicio inválido.' }) }),
   customerName: z.string().trim().min(1, 'El nombre del cliente es obligatorio.').max(160),
-  customerPhone: z.string().trim().max(32).optional().default(''),
-  customerEmail: z.string().trim().max(160).optional().default(''),
+  customerPhone: z
+    .string()
+    .trim()
+    .max(32)
+    .regex(/^$|^\+?[\d\s()-]{8,}$/, 'Teléfono inválido (usa solo números, ej: +56 9 1234 5678).')
+    .optional()
+    .default(''),
+  customerEmail: z
+    .string()
+    .trim()
+    .max(160)
+    .refine((value) => value === '' || z.string().email().safeParse(value).success, 'Correo del cliente inválido.')
+    .optional()
+    .default(''),
   device: z.string().trim().max(160).optional().default(''),
   description: z.string().trim().max(2000).optional().default(''),
   paymentStatus: z.enum(PAYMENT_STATUSES).optional().default('pendiente'),
@@ -33,6 +45,7 @@ const serviceUpdateSchema = serviceSchema
   .refine((data) => Object.keys(data).length > 0, { message: 'No se enviaron campos para actualizar.' });
 
 const serviceIdSchema = z.object({ id: z.string().uuid('ID de servicio inválido.') });
+const removeQuerySchema = z.object({ restock: z.enum(['true', 'false']).optional() });
 const statusSchema = z.object({ status: z.enum(SERVICE_STATUSES, { errorMap: () => ({ message: 'Estado inválido.' }) }) });
 
 const listQuerySchema = z.object({
@@ -50,6 +63,6 @@ router.post('/', authenticate, validate(serviceSchema), servicesController.creat
 router.get('/:id', authenticate, validate(serviceIdSchema, 'params'), servicesController.getById);
 router.put('/:id', authenticate, validate(serviceIdSchema, 'params'), validate(serviceUpdateSchema), servicesController.update);
 router.patch('/:id/status', authenticate, validate(serviceIdSchema, 'params'), validate(statusSchema), servicesController.updateStatus);
-router.delete('/:id', authenticate, validate(serviceIdSchema, 'params'), servicesController.remove);
+router.delete('/:id', authenticate, validate(serviceIdSchema, 'params'), validate(removeQuerySchema, 'query'), servicesController.remove);
 
 export { router as servicesRoutes };

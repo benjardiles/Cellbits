@@ -4,18 +4,18 @@ import { useAuth } from '../context/AuthContext.jsx';
 import logo from '../assets/logo-cellbits.png';
 
 const navItems = [
-  { to: '/', label: 'Panel', end: true },
-  { to: '/inventario', label: 'Inventario', end: true },
-  { to: '/movimientos', label: 'Movimientos', end: false },
-  { to: '/servicios', label: 'Servicios', end: false },
+  { to: '/app', label: 'Panel', end: true },
+  { to: '/app/inventario', label: 'Inventario', end: true },
+  { to: '/app/movimientos', label: 'Movimientos', end: false },
+  { to: '/app/servicios', label: 'Servicios', end: false },
 ];
 
 function getQuickAction(pathname) {
-  if (pathname.startsWith('/inventario') || pathname.startsWith('/productos')) {
-    return { label: '+ Añadir producto', to: '/productos/nuevo' };
+  if (pathname.startsWith('/app/inventario') || pathname.startsWith('/app/productos')) {
+    return { label: '+ Añadir producto', to: '/app/productos/nuevo' };
   }
-  if (pathname.startsWith('/servicios')) {
-    return { label: '+ Nuevo servicio', to: '/servicios/nuevo' };
+  if (pathname.startsWith('/app/servicios')) {
+    return { label: '+ Nuevo servicio', to: '/app/servicios/nuevo' };
   }
   return null;
 }
@@ -44,7 +44,7 @@ export function Layout() {
 
   function handleLogout() {
     logout();
-    navigate('/login');
+    navigate('/app/login');
   }
 
   function goTo(path) {

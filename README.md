@@ -22,6 +22,16 @@ npm run dev                          # levanta API (http://localhost:4000) y fro
 | `APPDOMAIN` | `http://localhost:5173` funciona para desarrollo en tu propio equipo |
 | `SMTP_*` | **Opcional.** Si lo dejas vacío, las notificaciones de servicio quedan en estado `pending` sin romper nada — para desarrollo normal no lo necesitas. Si necesitas probar el envío real de correos, pide las credenciales al dueño del proyecto por un canal seguro (nunca por un issue/PR/commit) |
 
+## Rutas del sitio
+| Ruta | Qué es |
+| --- | --- |
+| `/` | Landing pública para clientes (textos y contacto en `client/src/landing/content.js`) |
+| `/app/login` | Login del sistema interno para trabajadores |
+| `/app/...` | Sistema interno (panel, inventario, movimientos, servicios) |
+| `/scan/:id` | Ficha pública del QR impreso en los cajones (no mover: las etiquetas ya impresas apuntan aquí) |
+
+Las rutas antiguas (`/login`, `/inventario`, `/productos/...`, `/servicios/...`, `/movimientos`) redirigen automáticamente a `/app/...`.
+
 ## Acceso por defecto
 - Usuario: `admin`
 - Contraseña: `admin123`
