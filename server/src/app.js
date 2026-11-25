@@ -15,7 +15,8 @@ export function createApp() {
   // Detrás de Caddy + Cloudflare Tunnel: confiar en el proxy local para obtener la IP real del visitante
   app.set('trust proxy', 'loopback');
   app.use(helmet());
-  app.use(cors({ origin: true, credentials: false }));
+  // Auditoría #7: solo el propio frontend puede llamar a la API desde otro origen.
+  app.use(cors({ origin: config.corsOrigins, credentials: false }));
   app.use(express.json({ limit: '1mb' }));
 
   if (config.env !== 'test') {
@@ -30,6 +31,18 @@ export function createApp() {
     message: { status: 'error', code: 'RATE_LIMITED', message: 'Demasiadas peticiones, inténtalo más tarde.' },
   });
   app.use('/api', limiter);
+
+  // Auditoría #6: límite específico para el login contra fuerza bruta.
+  // Solo cuentan los intentos fallidos, así un trabajador no se bloquea por entrar varias veces.
+  const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 10,
+    skipSuccessfulRequests: true,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    message: { status: 'error', code: 'RATE_LIMITED', message: 'Demasiados intentos de inicio de sesión. Espera 15 minutos e inténtalo de nuevo.' },
+  });
+  app.use('/api/auth/login', loginLimiter);
 
   app.get('/api/health', (_req, res) => {
     res.json({ status: 'ok', module: 'cellbits-api', time: new Date().toISOString() });

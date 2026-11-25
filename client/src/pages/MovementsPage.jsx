@@ -118,13 +118,13 @@ export function MovementsPage() {
               <tr key={movement.id}>
                 <td className="muted">{formatDate(movement.createdAt)}</td>
                 <td>
-                  <Link to={`/productos/${movement.productId}`}>{movement.productName}</Link>
+                  <Link to={`/app/productos/${movement.productId}`}>{movement.productName}</Link>
                   <div className="muted" style={{ fontSize: 13 }}>{movement.productSku}</div>
                 </td>
                 <td><MovementTypeBadge type={movement.type} /></td>
                 <td>{movement.delta > 0 ? `+${movement.delta}` : movement.delta}</td>
                 <td>{movement.reason || '—'}</td>
-                <td>{movement.serviceId ? <Link to={`/servicios/${movement.serviceId}`}>Ver servicio</Link> : <span className="muted">—</span>}</td>
+                <td>{movement.serviceId ? <Link to={`/app/servicios/${movement.serviceId}`}>Ver servicio</Link> : <span className="muted">—</span>}</td>
                 <td className="muted">{movement.username || '—'}</td>
               </tr>
             ))}

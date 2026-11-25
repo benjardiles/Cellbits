@@ -48,9 +48,22 @@ export function ServiceDetailPage() {
 
   async function handleDelete() {
     if (!window.confirm(`¿Eliminar el servicio de "${service.customerName}"? Esta acción no se puede deshacer.`)) return;
+    // Si el servicio descontó repuestos, preguntar si vuelven al inventario
+    // (no siempre: si el equipo ya se entregó, los repuestos están instalados).
+    const usedParts = parts.filter((movement) => movement.delta < 0);
+    let restock = false;
+    if (usedParts.length > 0) {
+      const units = usedParts.reduce((sum, movement) => sum - movement.delta, 0);
+      restock = window.confirm(
+        `Este servicio usó ${units} unidad(es) de repuestos.\n\n` +
+        '¿Devolverlas al inventario?\n\n' +
+        'Aceptar: se suman de vuelta al stock (con registro en Movimientos).\n' +
+        'Cancelar: se elimina el servicio sin tocar el stock (repuestos ya instalados).',
+      );
+    }
     try {
-      await servicesApi.remove(id);
-      navigate('/servicios');
+      await servicesApi.remove(id, { restock });
+      navigate('/app/servicios');
     } catch (err) {
       setError(extractApiError(err).message);
     }
@@ -60,7 +73,7 @@ export function ServiceDetailPage() {
     return (
       <div>
         <div className="alert alert-error">{error}</div>
-        <Link to="/servicios">← Volver a servicios</Link>
+        <Link to="/app/servicios">← Volver a servicios</Link>
       </div>
     );
   }
@@ -69,7 +82,7 @@ export function ServiceDetailPage() {
 
   return (
     <div style={{ display: 'grid', gap: 20 }}>
-      <Breadcrumbs items={[{ label: 'Panel', to: '/' }, { label: 'Servicios', to: '/servicios' }, { label: service.customerName }]} />
+      <Breadcrumbs items={[{ label: 'Panel', to: '/' }, { label: 'Servicios', to: '/app/servicios' }, { label: service.customerName }]} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <h1 style={{ marginBottom: 4 }}>{service.customerName}</h1>
@@ -78,7 +91,7 @@ export function ServiceDetailPage() {
           </p>
         </div>
         <div className="actions">
-          <Link to={`/servicios/${id}/editar`} className="btn btn-secondary">Editar</Link>
+          <Link to={`/app/servicios/${id}/editar`} className="btn btn-secondary">Editar</Link>
           <button type="button" className="btn btn-secondary" onClick={handleDelete}>Eliminar</button>
         </div>
       </div>
@@ -134,7 +147,7 @@ export function ServiceDetailPage() {
                 {parts.map((movement) => (
                   <tr key={movement.id}>
                     <td>
-                      <Link to={`/productos/${movement.productId}`}>{movement.productName}</Link>
+                      <Link to={`/app/productos/${movement.productId}`}>{movement.productName}</Link>
                       <div className="muted" style={{ fontSize: 12 }}>{movement.productSku}</div>
                     </td>
                     <td><MovementTypeBadge type={movement.type} /></td>

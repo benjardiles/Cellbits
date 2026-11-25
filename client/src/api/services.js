@@ -31,7 +31,8 @@ export const servicesApi = {
     return data.service;
   },
 
-  async remove(id) {
-    await http.delete(`/services/${id}`);
+  async remove(id, { restock = false } = {}) {
+    const { data } = await http.delete(`/services/${id}`, { params: { restock: String(restock) } });
+    return data;
   },
 };

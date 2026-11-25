@@ -98,7 +98,7 @@ export function ServiceFormPage() {
           paymentStatus: form.paymentStatus,
         };
         await servicesApi.update(id, payload);
-        navigate(`/servicios/${id}`);
+        navigate(`/app/servicios/${id}`);
       } else {
         const payload = {
           type: form.type,
@@ -114,7 +114,7 @@ export function ServiceFormPage() {
             .map((p) => ({ productId: p.productId, quantity: Number(p.quantity) })),
         };
         const service = await servicesApi.create(payload);
-        navigate(`/servicios/${service.id}`);
+        navigate(`/app/servicios/${service.id}`);
       }
     } catch (err) {
       setError(extractApiError(err).message);
@@ -130,8 +130,8 @@ export function ServiceFormPage() {
       <Breadcrumbs
         items={
           isEditing
-            ? [{ label: 'Panel', to: '/' }, { label: 'Servicios', to: '/servicios' }, { label: form.customerName || 'Servicio', to: `/servicios/${id}` }, { label: 'Editar' }]
-            : [{ label: 'Panel', to: '/' }, { label: 'Servicios', to: '/servicios' }, { label: 'Nuevo servicio' }]
+            ? [{ label: 'Panel', to: '/' }, { label: 'Servicios', to: '/app/servicios' }, { label: form.customerName || 'Servicio', to: `/app/servicios/${id}` }, { label: 'Editar' }]
+            : [{ label: 'Panel', to: '/' }, { label: 'Servicios', to: '/app/servicios' }, { label: 'Nuevo servicio' }]
         }
       />
       <div>

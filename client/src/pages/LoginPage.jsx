@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { extractApiError } from '../api/client.js';
 import logo from '../assets/logo-cellbits.png';
@@ -19,7 +19,7 @@ export function LoginPage() {
     setSubmitting(true);
     try {
       await login(username.trim(), password);
-      const from = location.state?.from?.pathname || '/';
+      const from = location.state?.from?.pathname || '/app';
       navigate(from, { replace: true });
     } catch (err) {
       setError(extractApiError(err).message);
@@ -44,7 +44,7 @@ export function LoginPage() {
           <h1 className="brand-word" style={{ fontSize: 24, margin: 0, fontWeight: 500 }}>CellBits</h1>
         </div>
         <p className="muted" style={{ marginTop: 0 }}>
-          Inicia sesión para gestionar el inventario.
+          Acceso para trabajadores.
         </p>
 
         {error && <div className="alert alert-error">{error}</div>}
@@ -78,6 +78,9 @@ export function LoginPage() {
             {submitting ? 'Ingresando…' : 'Ingresar'}
           </button>
         </form>
+        <p style={{ margin: '16px 0 0', fontSize: 14, textAlign: 'center' }}>
+          <Link to="/" className="muted">← Volver a cellbits.cl</Link>
+        </p>
       </div>
     </div>
   );

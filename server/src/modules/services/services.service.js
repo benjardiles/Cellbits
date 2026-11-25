@@ -139,9 +139,34 @@ export const servicesService = {
     return updated;
   },
 
-  async remove(id) {
+  // Auditoría #5: al borrar un servicio se puede devolver al inventario el
+  // stock que consumieron sus repuestos. Es opcional porque si el equipo ya se
+  // entregó, los repuestos están instalados y no vuelven físicamente al cajón.
+  async remove(id, { restock = false, userId = null } = {}) {
+    const service = await this.getById(id);
+    const restocked = [];
+
+    if (restock) {
+      const { items } = await movementsService.list({ serviceId: id, limit: 200 });
+      const netByProduct = new Map();
+      for (const movement of items) {
+        netByProduct.set(movement.productId, (netByProduct.get(movement.productId) ?? 0) + movement.delta);
+      }
+      for (const [productId, net] of netByProduct) {
+        if (net >= 0) continue;
+        if (!inventoryRepository.findById(productId)) continue; // producto ya eliminado
+        await movementsService.register(
+          productId,
+          { type: 'entrada', delta: -net, reason: `Devolución: servicio eliminado (${service.device || service.type})` },
+          userId,
+          id,
+        );
+        restocked.push({ productId, quantity: -net });
+      }
+    }
+
     if (!servicesRepository.delete(id)) throw new NotFoundError('Servicio');
-    return { deleted: true };
+    return { deleted: true, restocked };
   },
 
   async getDashboard() {

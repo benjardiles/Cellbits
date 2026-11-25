@@ -61,7 +61,7 @@ export function InventoryPage() {
           <h1 style={{ marginBottom: 4 }}>Inventario</h1>
           <p className="muted" style={{ marginTop: 0 }}>{total} producto{total === 1 ? '' : 's'}</p>
         </div>
-        <Link to="/productos/nuevo" className="btn">+ Añadir producto</Link>
+        <Link to="/app/productos/nuevo" className="btn">+ Añadir producto</Link>
       </div>
 
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -92,7 +92,7 @@ export function InventoryPage() {
       ) : products.length === 0 ? (
         <div className="card empty-state">
           <p>No hay productos para mostrar.</p>
-          <Link to="/productos/nuevo" className="btn">Añadir el primer producto</Link>
+          <Link to="/app/productos/nuevo" className="btn">Añadir el primer producto</Link>
         </div>
       ) : (
         <table className="table">
@@ -109,7 +109,7 @@ export function InventoryPage() {
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/productos/${product.id}`)}>
+              <tr key={product.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/app/productos/${product.id}`)}>
                 <td>
                   <strong>{product.name}</strong>
                   <div className="muted" style={{ fontSize: 13 }}>{product.description ? product.description.slice(0, 60) : ''}</div>
@@ -123,8 +123,8 @@ export function InventoryPage() {
                 <td><StockBadge product={product} /></td>
                 <td>
                   <div className="actions" onClick={(e) => e.stopPropagation()}>
-                    <Link to={`/productos/${product.id}/imprimir`} className="btn btn-sm btn-secondary" title="Imprimir etiqueta QR">QR</Link>
-                    <Link to={`/productos/${product.id}/editar`} className="btn btn-sm btn-secondary">Editar</Link>
+                    <Link to={`/app/productos/${product.id}/imprimir`} className="btn btn-sm btn-secondary" title="Imprimir etiqueta QR">QR</Link>
+                    <Link to={`/app/productos/${product.id}/editar`} className="btn btn-sm btn-secondary">Editar</Link>
                     <button type="button" className="btn btn-sm btn-danger" onClick={() => handleDelete(product)}>Eliminar</button>
                   </div>
                 </td>

@@ -54,7 +54,7 @@ export function ServicesPage() {
           <h1 style={{ marginBottom: 4 }}>Servicios</h1>
           <p className="muted" style={{ marginTop: 0 }}>{total} servicio{total === 1 ? '' : 's'}</p>
         </div>
-        <Link to="/servicios/nuevo" className="btn">+ Nuevo servicio</Link>
+        <Link to="/app/servicios/nuevo" className="btn">+ Nuevo servicio</Link>
       </div>
 
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -85,7 +85,7 @@ export function ServicesPage() {
       ) : services.length === 0 ? (
         <div className="card empty-state">
           <p>No hay servicios para mostrar.</p>
-          <Link to="/servicios/nuevo" className="btn">Registrar el primero</Link>
+          <Link to="/app/servicios/nuevo" className="btn">Registrar el primero</Link>
         </div>
       ) : (
         <table className="table">
@@ -102,7 +102,7 @@ export function ServicesPage() {
           </thead>
           <tbody>
             {services.map((service) => (
-              <tr key={service.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/servicios/${service.id}`)}>
+              <tr key={service.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/app/servicios/${service.id}`)}>
                 <td>
                   <strong>{service.customerName}</strong>
                   <div className="muted" style={{ fontSize: 13 }}>{service.customerPhone || '—'}</div>

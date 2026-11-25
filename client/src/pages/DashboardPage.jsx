@@ -59,7 +59,7 @@ export function DashboardPage() {
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <h2 style={{ fontSize: 16, marginTop: 0 }}>Servicios recientes</h2>
-            <Link to="/servicios" className="muted" style={{ fontSize: 13 }}>Ver todos →</Link>
+            <Link to="/app/servicios" className="muted" style={{ fontSize: 13 }}>Ver todos →</Link>
           </div>
           <table className="table" style={{ border: 'none' }}>
             <thead>
@@ -74,7 +74,7 @@ export function DashboardPage() {
             <tbody>
               {servicesData.recentServices.map((service) => (
                 <tr key={service.id}>
-                  <td><Link to={`/servicios/${service.id}`}>{service.customerName}</Link></td>
+                  <td><Link to={`/app/servicios/${service.id}`}>{service.customerName}</Link></td>
                   <td className="muted">{serviceTypeLabel(service.type)}</td>
                   <td><ServiceStatusBadge status={service.status} /></td>
                   <td><PaymentStatusBadge paymentStatus={service.paymentStatus} /></td>
@@ -101,7 +101,7 @@ export function DashboardPage() {
             <tbody>
               {lowStockProducts.map((product) => (
                 <tr key={product.id}>
-                  <td><Link to={`/productos/${product.id}`}>{product.name}</Link></td>
+                  <td><Link to={`/app/productos/${product.id}`}>{product.name}</Link></td>
                   <td className="muted">{product.location || '—'}</td>
                   <td>{product.quantity} {product.unit}</td>
                   <td>{product.minQuantity}</td>
@@ -115,7 +115,7 @@ export function DashboardPage() {
       <div className="card">
         <h2 style={{ fontSize: 16, marginTop: 0 }}>Agregados recientemente</h2>
         {recentProducts.length === 0 ? (
-          <p className="muted">Aún no hay productos. <Link to="/productos/nuevo">Añade el primero.</Link></p>
+          <p className="muted">Aún no hay productos. <Link to="/app/productos/nuevo">Añade el primero.</Link></p>
         ) : (
           <table className="table" style={{ border: 'none' }}>
             <thead>
@@ -131,7 +131,7 @@ export function DashboardPage() {
             <tbody>
               {recentProducts.map((product) => (
                 <tr key={product.id}>
-                  <td><Link to={`/productos/${product.id}`}>{product.name}</Link></td>
+                  <td><Link to={`/app/productos/${product.id}`}>{product.name}</Link></td>
                   <td className="muted">{product.sku}</td>
                   <td className="muted">{product.location || '—'}</td>
                   <td>{product.quantity} {product.unit}</td>

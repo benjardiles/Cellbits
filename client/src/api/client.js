@@ -27,8 +27,10 @@ http.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       setToken(null);
-      if (!window.location.pathname.startsWith('/login')) {
-        window.location.href = '/login';
+      // Solo redirigir dentro del sistema interno: la landing y /scan son públicas.
+      const path = window.location.pathname;
+      if (path.startsWith('/app') && !path.startsWith('/app/login')) {
+        window.location.href = '/app/login';
       }
     }
     return Promise.reject(error);
