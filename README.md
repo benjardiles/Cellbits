@@ -26,7 +26,7 @@ npm run dev                          # levanta API (http://localhost:4000) y fro
 | Ruta | Qué es |
 | --- | --- |
 | `/` | Landing pública para clientes (textos y contacto en `client/src/landing/content.js`) |
-| `/app/login` | Login del sistema interno para trabajadores |
+| `/app/login` | Login del sistema interno para trabajadores (sin enlace en la landing: se entra con el link directo) |
 | `/app/...` | Sistema interno (panel, inventario, movimientos, servicios) |
 | `/scan/:id` | Ficha pública del QR impreso en los cajones (no mover: las etiquetas ya impresas apuntan aquí) |
 

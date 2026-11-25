@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import logo from '../assets/logo-cellbits.png';
 import { business, hero, services, steps } from '../landing/content.js';
 import '../styles/landing.css';
@@ -53,7 +52,6 @@ export function LandingPage() {
             <a href="#servicios" onClick={closeMenu}>Servicios</a>
             <a href="#proceso" onClick={closeMenu}>Cómo trabajamos</a>
             <a href="#contacto" onClick={closeMenu}>Contacto</a>
-            <Link to="/app/login" className="lp-staff" onClick={closeMenu}>Acceso trabajadores</Link>
           </nav>
           <button
             type="button"
@@ -158,7 +156,6 @@ export function LandingPage() {
       <footer className="lp-footer">
         <div className="lp-wrap lp-footer-inner">
           <span>© {new Date().getFullYear()} {business.name}</span>
-          <Link to="/app/login">Acceso trabajadores →</Link>
         </div>
       </footer>
     </div>

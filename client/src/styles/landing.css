@@ -26,11 +26,6 @@ html:has(.lp) { scroll-behavior: smooth; scroll-padding-top: 72px; }
 .lp-links { display: flex; align-items: center; gap: 6px; }
 .lp-links a { color: #d4d4d8; padding: 8px 14px; border-radius: 8px; font-size: 15px; font-weight: 500; }
 .lp-links a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
-.lp-links .lp-staff {
-  margin-left: 10px; color: var(--gold-light);
-  border: 1px solid rgba(203, 164, 78, 0.45);
-}
-.lp-links .lp-staff:hover { color: #fff; background: rgba(203, 164, 78, 0.16); }
 .lp-burger { display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
 .lp-burger span { display: block; width: 22px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; }
 
@@ -125,8 +120,7 @@ html:has(.lp) { scroll-behavior: smooth; scroll-padding-top: 72px; }
   }
   .lp-links.is-open { display: flex; }
   .lp-links a { padding: 14px 12px; }
-  .lp-links .lp-staff { margin: 8px 0 0; text-align: center; }
-  .lp-hero { padding: 64px 0 72px; }
+    .lp-hero { padding: 64px 0 72px; }
   .lp-hero-inner, .lp-contact-inner { grid-template-columns: 1fr; }
   .lp-hero-mark { display: none; }
   .lp-section { padding: 64px 0; }
