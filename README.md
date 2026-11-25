@@ -32,11 +32,7 @@ npm run dev                          # levanta API (http://localhost:4000) y fro
 
 Las rutas antiguas (`/login`, `/inventario`, `/productos/...`, `/servicios/...`, `/movimientos`) redirigen automáticamente a `/app/...`.
 
-## Acceso por defecto
-- Usuario: `admin`
-- Contraseña: `admin123`
 
-Cambia la contraseña editando el `.env` del servidor (`ADMIN_PASSWORD`) o desde la app. **Cambia la contraseña antes de usarla en producción.**
 
 ## Estructura
 ```
